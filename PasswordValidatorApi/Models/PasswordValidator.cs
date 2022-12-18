@@ -1,59 +1,114 @@
 ﻿using System;
+using System.Linq;
+
 namespace PasswordValidatorApi.Models
 {
-    public class PasswordValidator
+    public class PasswordValidator : IPasswordValidator, CustomValidator
     {
 
-        public PasswordValidator()
+        /// <summary>
+        /// Mininum required length, default = 1
+        /// </summary>
+        public int RequiredLengthMin { get; set; } = 1;
+
+        /// <summary>
+        /// Maxinum required length, defalut = int.MaxValue
+        /// </summary>
+        public int RequiredLengthMax { get; set; } = int.MaxValue;
+
+        /// <summary>
+        /// Require non digit or non letter character, default = true
+        /// </summary>
+        public bool RequiredNonLetterOrDigit { get; set; } = true;
+
+        /// <summary>
+        /// Require a lowercase between 'a' - 'z', default = true
+        /// </summary>
+        public bool RequiredLowercase { get; set; } = true;
+
+        /// <summary>
+        /// Require a uppercase between 'A' - 'Z', default = false
+        /// </summary>
+        public bool RequiredUppercase { get; set; } = false;
+
+        /// <summary>
+        /// Require a digit between '0' - '9', default = true
+        /// </summary>
+        public bool RequiredDigit { get; set; } = true;
+
+        public bool IsContinuousSameSequence(string item)
         {
+            throw new NotImplementedException();
         }
 
-        public PasswordValidator Is()
+        public bool ContainsNonLetterOrDigit(string item)
         {
-            return this;
+            return item.All(c => IsNonLetterOrDigit(c));
         }
 
-        public PasswordValidator Has()
+        public bool ContainsUpper(string item)
         {
-            return this;
+            return item.Any(c => IsUpper(c));
         }
 
-        public PasswordValidator Not()
+        public bool ContainsLower(string item)
         {
-            return this;
+            return item.Any(c => IsLower(c));
         }
 
-        public PasswordValidator Min(int num)
+        public bool ContainsDigit(string item)
         {
-            return this;
+            return item.Any(c => IsDigit(c));
         }
 
-        public PasswordValidator Max(int num)
+        public virtual bool IsInLength(string s)
         {
-            return this;
+            return s.Length >= RequiredLengthMin && s.Length <= RequiredLengthMax;
         }
 
-        public PasswordValidator Uppercase()
+        public virtual bool IsNonLetterOrDigit(char c)
         {
-            return this;
+            return IsUpper(c) || IsLower(c) || IsDigit(c);
         }
 
-        public PasswordValidator LowerCase()
+        public virtual bool IsUpper(char c)
         {
-            return this;
+            return c >= 'A' && c <= 'Z';
         }
 
-        public PasswordValidator Digits()
+        public virtual bool IsLower(char c)
         {
-            return this;
+            return c >= 'a' && c <= 'z';
         }
 
-        public bool Validate(string password)
+        public virtual bool IsDigit(char c)
         {
-            return false;
+            return c >= '0' && c <= '9';
         }
 
-        public PasswordValidator ContinuousSameSequence(bool symbol)
+        public bool Validate(string item)
+        {
+            if (string.IsNullOrEmpty(item) || RequiredLengthMin > RequiredLengthMax || !IsInLength(item))
+                return false;
+
+            if (RequiredNonLetterOrDigit && !ContainsNonLetterOrDigit(item))
+                return false;
+
+
+            if (RequiredUppercase && !ContainsUpper(item))
+                return false;
+
+
+            if (RequiredLowercase && !ContainsLower(item))
+                return false;
+
+            if (RequiredDigit && !ContainsDigit(item))
+                return false;
+
+            return true;
+        }
+
+        public bool IsImmediatelyFollowedBySameSequence(string item)
         {
             throw new NotImplementedException();
         }

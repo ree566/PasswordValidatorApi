@@ -4,36 +4,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PasswordValidatorApi.Models;
 
 namespace PasswordValidatorApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("/api/[controller]")]
+    public class PasswordValidateController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private IPasswordValidator _validator;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public PasswordValidateController(IPasswordValidator validator)
         {
-            _logger = logger;
+            _validator = validator;
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult Validate([FromBody] string password)
+        {
+            return Ok(_validator.Validate(password));
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [Route("[action]")]
+        public string SayHi()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return "HI1";
         }
     }
 }
