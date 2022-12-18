@@ -2,6 +2,6 @@
 {
     public interface IPasswordValidator : IBaseValidator
     {
-        bool IsContinuousSameSequence(string item);
+        bool IsImmediatelyFollowedBySameSequence(string item);
     }
 }

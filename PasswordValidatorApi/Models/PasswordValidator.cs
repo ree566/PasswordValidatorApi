@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PasswordValidatorApi.Models
 {
-    public class PasswordValidator : IPasswordValidator, CustomValidator
+    public class PasswordValidator : IPasswordValidator
     {
 
         /// <summary>
@@ -36,54 +37,33 @@ namespace PasswordValidatorApi.Models
         /// </summary>
         public bool RequiredDigit { get; set; } = true;
 
-        public bool IsContinuousSameSequence(string item)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool ContainsNonLetterOrDigit(string item)
         {
-            return item.All(c => IsNonLetterOrDigit(c));
+            Regex regex = new Regex("[a-zA-Z\\d]");
+            return regex.Match(item).Success;
         }
 
         public bool ContainsUpper(string item)
         {
-            return item.Any(c => IsUpper(c));
+            Regex regex = new Regex("[A-Z]");
+            return regex.Match(item).Success;
         }
 
         public bool ContainsLower(string item)
         {
-            return item.Any(c => IsLower(c));
+            Regex regex = new Regex("[a-z]");
+            return regex.Match(item).Success;
         }
 
         public bool ContainsDigit(string item)
         {
-            return item.Any(c => IsDigit(c));
+            Regex regex = new Regex("\\d");
+            return regex.Match(item).Success;
         }
 
         public virtual bool IsInLength(string s)
         {
             return s.Length >= RequiredLengthMin && s.Length <= RequiredLengthMax;
-        }
-
-        public virtual bool IsNonLetterOrDigit(char c)
-        {
-            return IsUpper(c) || IsLower(c) || IsDigit(c);
-        }
-
-        public virtual bool IsUpper(char c)
-        {
-            return c >= 'A' && c <= 'Z';
-        }
-
-        public virtual bool IsLower(char c)
-        {
-            return c >= 'a' && c <= 'z';
-        }
-
-        public virtual bool IsDigit(char c)
-        {
-            return c >= '0' && c <= '9';
         }
 
         public bool Validate(string item)
@@ -110,7 +90,9 @@ namespace PasswordValidatorApi.Models
 
         public bool IsImmediatelyFollowedBySameSequence(string item)
         {
-            throw new NotImplementedException();
+            //Must not contain any repeating substrings of three characters or more
+            Regex regex = new Regex("(...+)\\1");
+            return !regex.Match(item).Success;
         }
     }
 }

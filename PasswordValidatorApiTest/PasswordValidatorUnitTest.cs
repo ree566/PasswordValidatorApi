@@ -122,6 +122,23 @@ namespace PasswordValidatorApiTest
         }
 
         [Theory]
+        [InlineData("ABCABC")]
+        [InlineData("AAAAAAAA")]
+        [InlineData("11111111")]
+        [InlineData("abcdabcd")]
+        [InlineData("abcabc")]
+        [InlineData("123123")]
+        [InlineData("abc123abc123abc")]
+        public void IsImmediatelyFollowedBySameSequence_FollowedBySameSequence_ReturnsFalse(string value)
+        {
+            PasswordValidator validator = new PasswordValidator();
+
+            var result = validator.IsImmediatelyFollowedBySameSequence(value);
+
+            Assert.False(result);
+        }
+
+        [Theory]
         [InlineData("")]
         [InlineData("AAAA11cccc")]
         [InlineData("AAaa11BBbb22")]
@@ -136,11 +153,24 @@ namespace PasswordValidatorApiTest
         }
 
         [Theory]
+        [InlineData("ABC1-2")]
+        [InlineData("ab@!x3")]
+        [InlineData("!@#$%^&*()_+|~}{\":?><")]
+        public void ContainsNonLetterOrDigit_HaveNonLetterOrDigit_ReturnsTrue(string value)
+        {
+            PasswordValidator validator = new PasswordValidator();
+
+            var result = validator.IsImmediatelyFollowedBySameSequence(value);
+
+            Assert.True(result);
+        }
+
+        [Theory]
         [InlineData("ABCABC")]
         [InlineData("abcabc")]
         [InlineData("123123")]
         [InlineData("abc123abc123abc")]
-        public void IsImmediatelyFollowedBySameSequence_FollowedBySameSequence_ReturnsFalse(string value)
+        public void ContainsNonLetterOrDigit_NotHaveNonLetterOrDigit_ReturnsFalse(string value)
         {
             PasswordValidator validator = new PasswordValidator();
 
@@ -148,5 +178,7 @@ namespace PasswordValidatorApiTest
 
             Assert.False(result);
         }
+
+
     }
 }
