@@ -1,34 +1,40 @@
-﻿using System;
-using System.Net;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using PasswordValidatorApi;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using PasswordValidatorApi;
-using PasswordValidatorApi.Models;
 using Xunit;
+using PasswordValidatorApi.Models;
+using PasswordValidatorApi.Models.ValidatorRules;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace PasswordValidatorApiTest
+namespace PasswordValidatorApiTest.IntegrationTests
 {
-    public class PasswordValidatorIntegrationTest : IClassFixture<WebApplicationFactory<Startup>>
+    public class PasswordValidateControllerTest
     {
         private readonly WebApplicationFactory<Startup> _factory;
 
-        public PasswordValidatorIntegrationTest(WebApplicationFactory<Startup> factory)
+        public PasswordValidateControllerTest(WebApplicationFactory<Startup> factory)
         {
             _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
-                    services.AddSingleton<IPasswordValidator>(new PasswordValidator() {
-                        RequiredDigit = true,
-                        RequiredLengthMin = 1,
-                        RequiredLengthMax = 10,
-                        RequiredNonLetterOrDigit = false,
-                        RequiredLowercase = true,
-                        RequiredUppercase = false
-                    });
+                    services.AddSingleton<IPasswordValidator>(new PasswordValidator(
+                        new ValidatorRuleServiceImpl()
+                        {
+                            Rules =
+                            {
+                                new CharacterLengthFilterRule(1, 15),
+                                new LowerCaseAndDigitsOnlyRule(),
+                                new NotContainAdjacentSameSequenceRule()
+                            }
+                        }
+                        ));
                 });
             });
         }
@@ -51,6 +57,7 @@ namespace PasswordValidatorApiTest
 
             var body = await response.Content.ReadAsStringAsync();
             var created = JsonSerializer.Deserialize<JsonElement>(body);
+
         }
     }
 }

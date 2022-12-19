@@ -1,7 +1,7 @@
 ﻿namespace PasswordValidatorApi.Models
 {
-    public interface IPasswordValidator : IBaseValidator
+    public interface IPasswordValidator
     {
-        bool IsImmediatelyFollowedBySameSequence(string item);
+        ValidationResult ValidateRules(string item);
     }
 }

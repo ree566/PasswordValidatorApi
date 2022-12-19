@@ -23,7 +23,7 @@ namespace PasswordValidatorApi.Controllers
         [Route("[action]")]
         public IActionResult Validate([FromBody] string password)
         {
-            return Ok(_validator.Validate(password));
+            return Ok(_validator.ValidateRules(password).IsValid);
         }
 
         [HttpGet]
