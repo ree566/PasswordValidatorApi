@@ -1,4 +1,5 @@
-﻿using PasswordValidatorApi.Models.ValidatorRules;
+﻿using PasswordValidatorApi.Models.Handler;
+using PasswordValidatorApi.Models.HandlerChain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace PasswordValidatorApiTest.UnitTests
 {
-    public class NotContainAdjacentSameSequenceRuleTest
+    public class NotContainAdjacentSameSequenceValidationHandlerTest
     {
         [Theory]
         [InlineData("abc123abc")]
@@ -19,11 +20,11 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("abc")]
         public void Validate_FilterRules_ReturnsTrue(string value)
         {
-            IPasswordRule rule = new NotContainAdjacentSameSequenceRule();
+            IChainHandler handler = new NotContainAdjacentSameSequenceValidationHandler();
 
-            var result = rule.Validate(value);
+            var result = handler.ProcessRequest(value);
 
-            Assert.True(!result.HasErrors());
+            Assert.True(result == HandlerResult.CHAIN_DATA_HANDLED);
         }
 
         [Theory]
@@ -39,13 +40,11 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("abbaabba")]
         [InlineData("abc_abc_")]
         [InlineData("#!@#!@")]
-        public void Validate_NotFilterRules_ReturnsFalse(string value)
+        public void Validate_NotFilterRules_ThrowError(string value)
         {
-            IPasswordRule rule = new NotContainAdjacentSameSequenceRule();
+            IChainHandler handler = new NotContainAdjacentSameSequenceValidationHandler();
 
-            var result = rule.Validate(value);
-
-            Assert.True(result.HasErrors());
+            Assert.Throws<ChainHandlerException>(() => handler.ProcessRequest(value));
         }
     }
 }

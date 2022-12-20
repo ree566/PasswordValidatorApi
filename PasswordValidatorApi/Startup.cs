@@ -11,7 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PasswordValidatorApi.Models;
-using PasswordValidatorApi.Models.ValidatorRules;
+using PasswordValidatorApi.Models.ChainManagement;
+using PasswordValidatorApi.Models.Handler;
+using PasswordValidatorApi.Models.HandlerChain;
 
 namespace PasswordValidatorApi
 {
@@ -28,15 +30,15 @@ namespace PasswordValidatorApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IPasswordValidator>(new PasswordValidatorBuilder()
-                        .WithRules(new IPasswordRule[] {
-                                new CharacterLengthFilterRule(6, 15),
-                                new ContainsAtLeastOneLowerCaseRule(),
-                                new ContainsAtLeastOneDigitsRule(),
-                                new LowerCaseAndDigitsOnlyRule(),
-                                new NotContainAdjacentSameSequenceRule()
+            services.AddSingleton<ChainManager>(new ChainManager(true)
+                        .AppendHandlerToChain(new IChainHandler[] {
+                                new CharacterLengthFilterValidationHandler(6, 15),
+                                new ContainsAtLeastOneLowerCaseValidationHandler(),
+                                new ContainsAtLeastOneDigitsValidationHandler(),
+                                new LowerCaseAndDigitsOnlyValidationHandler(),
+                                new NotContainAdjacentSameSequenceValidationHandler()
                             }
-                        ).Build());
+                        ));
             services.AddSwaggerGen();
         }
 
