@@ -6,7 +6,7 @@ using Xunit;
 
 namespace PasswordValidatorApiTest.UnitTests
 {
-    public class LoweraseRuleTest
+    public class LowerCaseAndDigitsOnlyRuleTest
     {
         [Theory]
         [InlineData("abc123abc")]

@@ -2,10 +2,10 @@
 
 namespace PasswordValidatorApi.Models.ValidatorRules
 {
-    public class UpperCaseRule : IPasswordRule
+    public class ContainsAtLeastOneDigitsRule : IPasswordRule
     {
         private readonly string error_message = "Lowercase character and digits only";
-        private readonly Regex regex = new Regex("[A-Z]+");
+        private readonly Regex regex = new Regex("[\\d]+");
 
         public ValidationErrors Validate(string item)
         {

@@ -6,13 +6,13 @@ using Xunit;
 
 namespace PasswordValidatorApiTest.UnitTests
 {
-    public class LoweraseruleTest
+    public class ContainsAtLeastOneLoweraseRuleTest
     {
         [Theory]
         [InlineData("abcdefghijklmnopqrstuvwxyz")]
         public void Validate_FilterRules_ReturnsTrue(string value)
         {
-            IPasswordRule rule = new LowerCaseRule();
+            IPasswordRule rule = new ContainsAtLeastOneLowerCaseRule();
 
             var result = rule.Validate(value);
 
@@ -25,7 +25,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("!@#$%^^&*()_+|~}{\":?><")]
         public void Validate_NotFilterRules_ReturnsFalse(string value)
         {
-            IPasswordRule rule = new LowerCaseRule();
+            IPasswordRule rule = new ContainsAtLeastOneLowerCaseRule();
 
             var result = rule.Validate(value);
 

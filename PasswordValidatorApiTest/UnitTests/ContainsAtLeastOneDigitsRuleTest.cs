@@ -6,13 +6,13 @@ using Xunit;
 
 namespace PasswordValidatorApiTest.UnitTests
 {
-    public class DigitsRuleTest
+    public class ContainsAtLeastOneDigitsRuleTest
     {
         [Theory]
         [InlineData("1234567890")]
         public void Validate_FilterRules_ReturnsTrue(string value)
         {
-            IPasswordRule rule = new DigitsRule();
+            IPasswordRule rule = new ContainsAtLeastOneDigitsRule();
 
             var result = rule.Validate(value);
 
@@ -25,7 +25,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("!@#$%^^&*()_+|~}{\":?><")]
         public void Validate_NotFilterRules_ReturnsFalse(string value)
         {
-            IPasswordRule rule = new DigitsRule();
+            IPasswordRule rule = new ContainsAtLeastOneDigitsRule();
 
             var result = rule.Validate(value);
 

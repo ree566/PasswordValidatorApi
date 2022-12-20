@@ -13,36 +13,43 @@ namespace PasswordValidatorApiTest.IntegrationTests
         [Fact]
         public void AddRules_HasOneAddedRule()
         {
-            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl();
-
             IPasswordRule rule = new CharacterLengthFilterRule();
+            List<IPasswordRule> rules = new List<IPasswordRule>();
 
-            List<IPasswordRule> result = ruleService.AddRules(rule);
+            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl(rules);
 
-            Assert.True(result.Count > 0);
+            ruleService.AddRules(rule);
 
-            Assert.Contains<IPasswordRule>(rule, result);
+            Assert.True(rules.Count > 0);
+
+            Assert.Contains<IPasswordRule>(rule, rules);
         }
 
         [Fact]
         public void RemoveRules_HasEmptyRule()
         {
-            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl();
-
             IPasswordRule rule = new CharacterLengthFilterRule();
-            ruleService.AddRules(rule);
-            var result = ruleService.RemoveRules(rule);
+            List<IPasswordRule> rules = new List<IPasswordRule>() {
+                rule
+            };
 
-            Assert.True(result.Count == 0);
+            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl(rules);
+
+            ruleService.RemoveRules(rule);
+
+            Assert.True(rules.Count == 0);
         }
 
         [Fact]
         public void GetRules_HasOneAddedRule()
         {
-            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl();
-
             IPasswordRule rule = new CharacterLengthFilterRule();
-            ruleService.AddRules(rule);
+            List<IPasswordRule> rules = new List<IPasswordRule>() {
+                rule
+            };
+
+            IValidatorRuleService ruleService = new ValidatorRuleServiceImpl(rules);
+
             List<IPasswordRule> result = ruleService.GetRules();
 
             Assert.True(result.Count > 0);

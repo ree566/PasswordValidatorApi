@@ -15,16 +15,19 @@ namespace PasswordValidatorApi.Models
             Rules = new List<IPasswordRule>();
         }
 
-        public List<IPasswordRule> AddRules(IPasswordRule rules)
+        public ValidatorRuleServiceImpl(List<IPasswordRule> rules)
         {
-            AddRules(rules);
-            return Rules;
+            Rules = rules;
         }
 
-        public List<IPasswordRule> AddRules(params IPasswordRule[] rules)
+        public void AddRules(IPasswordRule rules)
+        {
+            AddRules(rules);
+        }
+
+        public void AddRules(params IPasswordRule[] rules)
         {
             Rules.AddRange(rules);
-            return Rules;
         }
 
         public List<IPasswordRule> GetRules()
@@ -32,19 +35,17 @@ namespace PasswordValidatorApi.Models
             return Rules;
         }
 
-        public List<IPasswordRule> RemoveRules(IPasswordRule rules)
+        public void RemoveRules(IPasswordRule rules)
         {
             RemoveRules(rules);
-            return Rules;
         }
 
-        public List<IPasswordRule> RemoveRules(params IPasswordRule[] rules)
+        public void RemoveRules(params IPasswordRule[] rules)
         {
             foreach(IPasswordRule rule in rules)
             {
                 Rules.Remove(rule);
             }
-            return Rules;
         }
     }
 }

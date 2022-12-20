@@ -28,8 +28,8 @@ namespace PasswordValidatorApiTest.IntegrationTests
                 {
                     Rules = {
                         new CharacterLengthFilterRule(min, max),
-                        new LowerCaseRule(),
-                        new DigitsRule(),
+                        new ContainsAtLeastOneLowerCaseRule(),
+                        new ContainsAtLeastOneDigitsRule(),
                         new LowerCaseAndDigitsOnlyRule(),
                         new NotContainAdjacentSameSequenceRule()
                     }
@@ -60,8 +60,8 @@ namespace PasswordValidatorApiTest.IntegrationTests
                 {
                     Rules = {
                         new CharacterLengthFilterRule(min, max),
-                        new LowerCaseRule(),
-                        new DigitsRule(),
+                        new ContainsAtLeastOneLowerCaseRule(),
+                        new ContainsAtLeastOneDigitsRule(),
                         new LowerCaseAndDigitsOnlyRule(),
                         new NotContainAdjacentSameSequenceRule()
                     }
@@ -71,6 +71,7 @@ namespace PasswordValidatorApiTest.IntegrationTests
             var result = validator.ValidateRules(item);
 
             Assert.False(result.IsValid);
+
         }
     }
 }

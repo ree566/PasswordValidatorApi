@@ -7,8 +7,8 @@ namespace PasswordValidatorApi.Models
     {
         public List<IPasswordRule> GetRules();
 
-        public List<IPasswordRule> AddRules(params IPasswordRule[] rules);
+        public void AddRules(params IPasswordRule[] rules);
 
-        public List<IPasswordRule> RemoveRules(params IPasswordRule[] rules);
+        public void RemoveRules(params IPasswordRule[] rules);
     }
 }
