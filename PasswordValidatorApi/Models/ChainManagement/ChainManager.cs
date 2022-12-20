@@ -60,6 +60,10 @@ namespace PasswordValidatorApi.Models.ChainManagement
                 catch (ChainHandlerException ex)
                 {
                     chainHandlerExceptionList.Add(ex);
+                    if (stopOnFirstHandlerException)
+                    {
+                        break;
+                    }
                 }
             }
 
