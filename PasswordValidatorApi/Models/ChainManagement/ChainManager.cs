@@ -9,10 +9,12 @@ namespace PasswordValidatorApi.Models.ChainManagement
 
         private bool stopOnFirstHandlerException = false;
         public bool StopOnFirstException { get { return this.stopOnFirstHandlerException; } }
+
         public ChainManager(bool stopOnFirstHandlerException)
         {
             this.stopOnFirstHandlerException = stopOnFirstHandlerException;
         }
+
         public ChainManager<REQUEST_TYPE> AppendHandlerToChain(params IChainHandler<REQUEST_TYPE>[] handlers)
         {
             foreach (IChainHandler<REQUEST_TYPE> handler in handlers)
@@ -47,6 +49,12 @@ namespace PasswordValidatorApi.Models.ChainManagement
             return this;
         }
 
+        /// <summary>
+        /// Process chain request and return handle result, pass a list to get all exception message 
+        /// </summary>
+        /// <param name="requestData">Request data defined by <paramref name="REQUEST_TYPE"/></param>
+        /// <param name="chainHandlerExceptionList">Return exception in chains all</param>
+        /// <returns></returns>
         public HandlerResult ProcessRequest(REQUEST_TYPE requestData, out List<ChainHandlerException> chainHandlerExceptionList)
         {
             chainHandlerExceptionList = new List<ChainHandlerException>();
