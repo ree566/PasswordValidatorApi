@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PasswordValidatorApi.Models;
+using PasswordValidatorApi.Models.ChainManagement;
+using PasswordValidatorApi.Models.HandlerChain;
 
 namespace PasswordValidatorApi.Controllers
 {
@@ -12,25 +14,20 @@ namespace PasswordValidatorApi.Controllers
     [Route("/api/[controller]")]
     public class PasswordValidateController : ControllerBase
     {
-        private IPasswordValidator _validator;
+        private ChainManager<string> _chainManager;
 
-        public PasswordValidateController(IPasswordValidator validator)
+        public PasswordValidateController(ChainManager<string> chainManager)
         {
-            _validator = validator;
+            _chainManager = chainManager;
         }
 
         [HttpPost]
         [Route("[action]")]
         public IActionResult Validate([FromBody] string password)
         {
-            return Ok(_validator.ValidateRules(password).IsValid);
+            List<ChainHandlerException> validationExceptions;
+            return Ok(_chainManager.ProcessRequest(password, out validationExceptions) == HandlerResult.CHAIN_DATA_HANDLED);
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public string SayHi()
-        {
-            return "HI1";
-        }
     }
 }
