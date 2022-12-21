@@ -20,7 +20,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("abc")]
         public void Validate_FilterRules_ReturnsTrue(string value)
         {
-            IChainHandler handler = new NotContainAdjacentSameSequenceValidationHandler();
+            IChainHandler<string> handler = new NotContainAdjacentSameSequenceValidationHandler();
 
             var result = handler.ProcessRequest(value);
 
@@ -42,7 +42,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("#!@#!@")]
         public void Validate_NotFilterRules_ThrowError(string value)
         {
-            IChainHandler handler = new NotContainAdjacentSameSequenceValidationHandler();
+            IChainHandler<string> handler = new NotContainAdjacentSameSequenceValidationHandler();
 
             Assert.Throws<ChainHandlerException>(() => handler.ProcessRequest(value));
         }

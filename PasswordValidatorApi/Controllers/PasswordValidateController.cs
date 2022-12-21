@@ -14,9 +14,9 @@ namespace PasswordValidatorApi.Controllers
     [Route("/api/[controller]")]
     public class PasswordValidateController : ControllerBase
     {
-        private ChainManager _chainManager;
+        private ChainManager<string> _chainManager;
 
-        public PasswordValidateController(ChainManager chainManager)
+        public PasswordValidateController(ChainManager<string> chainManager)
         {
             _chainManager = chainManager;
         }

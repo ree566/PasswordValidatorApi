@@ -13,7 +13,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("1234567890")]
         public void ProcessRequest_FilterRules_ReturnsTrue(string value)
         {
-            IChainHandler handler = new ContainsAtLeastOneDigitsValidationHandler();
+            IChainHandler<string> handler = new ContainsAtLeastOneDigitsValidationHandler();
 
             var result = handler.ProcessRequest(value);
 
@@ -26,7 +26,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("!@#$%^^&*()_+|~}{\":?><")]
         public void ProcessRequest_NotFilterRules_ThrowError(string value)
         {
-            IChainHandler rule = new ContainsAtLeastOneDigitsValidationHandler();
+            IChainHandler<string> rule = new ContainsAtLeastOneDigitsValidationHandler();
 
             Assert.Throws<ChainHandlerException>(() => rule.ProcessRequest(value));
         }

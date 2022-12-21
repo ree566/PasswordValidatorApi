@@ -3,7 +3,7 @@ using PasswordValidatorApi.Models.HandlerChain;
 
 namespace PasswordValidatorApi.Models.Handler
 {
-    public class ContainsAtLeastOneUppercaseValidationHandler : IChainHandler
+    public class ContainsAtLeastOneUppercaseValidationHandler : IChainHandler<string>
     {
         private readonly string error_message = "Lowercase character and digits only";
         private readonly Regex regex = new Regex("[A-Z]+");

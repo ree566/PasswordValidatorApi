@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PasswordValidatorApi.Models.ChainManagement
 {
-    public class ChainManager
+    public class ChainManager<REQUEST_TYPE>
     {
-        private List<IChainHandler> handlerChain = new List<IChainHandler>();
+        private List<IChainHandler<REQUEST_TYPE>> handlerChain = new List<IChainHandler<REQUEST_TYPE>>();
 
         private bool stopOnFirstHandlerException = false;
         public bool StopOnFirstException { get { return this.stopOnFirstHandlerException; } }
@@ -13,16 +13,16 @@ namespace PasswordValidatorApi.Models.ChainManagement
         {
             this.stopOnFirstHandlerException = stopOnFirstHandlerException;
         }
-        public ChainManager AppendHandlerToChain(params IChainHandler[] handlers)
+        public ChainManager<REQUEST_TYPE> AppendHandlerToChain(params IChainHandler<REQUEST_TYPE>[] handlers)
         {
-            foreach (IChainHandler handler in handlers)
+            foreach (IChainHandler<REQUEST_TYPE> handler in handlers)
             {
                 AppendHandlerToChain(handler);
             }
             return this;
         }
 
-        public ChainManager AppendHandlerToChain(IChainHandler handler)
+        public ChainManager<REQUEST_TYPE> AppendHandlerToChain(IChainHandler<REQUEST_TYPE> handler)
         {
             if (!handlerChain.Contains(handler))
                 handlerChain.Add(handler);
@@ -30,16 +30,16 @@ namespace PasswordValidatorApi.Models.ChainManagement
             return this;
         }
 
-        public ChainManager RemoveHandlerFromChain(params IChainHandler[] handlers)
+        public ChainManager<REQUEST_TYPE> RemoveHandlerFromChain(params IChainHandler<REQUEST_TYPE>[] handlers)
         {
-            foreach (IChainHandler handler in handlers)
+            foreach (IChainHandler<REQUEST_TYPE> handler in handlers)
             {
                 RemoveHandlerFromChain(handler);
             }
             return this;
         }
 
-        public ChainManager RemoveHandlerFromChain(IChainHandler handler)
+        public ChainManager<REQUEST_TYPE> RemoveHandlerFromChain(IChainHandler<REQUEST_TYPE> handler)
         {
             if (handlerChain.Contains(handler))
                 handlerChain.Remove(handler);
@@ -47,11 +47,11 @@ namespace PasswordValidatorApi.Models.ChainManagement
             return this;
         }
 
-        public HandlerResult ProcessRequest(string requestData, out List<ChainHandlerException> chainHandlerExceptionList)
+        public HandlerResult ProcessRequest(REQUEST_TYPE requestData, out List<ChainHandlerException> chainHandlerExceptionList)
         {
             chainHandlerExceptionList = new List<ChainHandlerException>();
 
-            foreach (IChainHandler handler in handlerChain)
+            foreach (IChainHandler<REQUEST_TYPE> handler in handlerChain)
             {
                 try
                 {

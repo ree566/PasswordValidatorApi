@@ -15,7 +15,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("abcdef123")]
         public void ProcessRequest_FilterRules_ReturnsTrue(string value)
         {
-            IChainHandler handler = new LowerCaseAndDigitsOnlyValidationHandler();
+            IChainHandler<string> handler = new LowerCaseAndDigitsOnlyValidationHandler();
 
             var result = handler.ProcessRequest(value);
 
@@ -31,7 +31,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData("!@#$%^^&*()_+|~}{\":?><")]
         public void ProcessRequest_NotFilterRules_ThrowError(string value)
         {
-            IChainHandler handler = new LowerCaseAndDigitsOnlyValidationHandler();
+            IChainHandler<string> handler = new LowerCaseAndDigitsOnlyValidationHandler();
 
             Assert.Throws<ChainHandlerException>(() => handler.ProcessRequest(value));
         }

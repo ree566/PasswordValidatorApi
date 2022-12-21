@@ -1,8 +1,8 @@
 ﻿namespace PasswordValidatorApi.Models.HandlerChain
 {
-    public interface IChainHandler
+    public interface IChainHandler<REQUEST_TYPE>
     {
-        public HandlerResult ProcessRequest(string item);
+        public HandlerResult ProcessRequest(REQUEST_TYPE item);
 
     }
 }

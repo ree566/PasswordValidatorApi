@@ -15,7 +15,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData(int.MinValue, int.MaxValue, "abcdef")]
         public void ProcessRequest_FilterRules_ReturnsTrue(int min, int max, string value)
         {
-            IChainHandler handler = new CharacterLengthFilterValidationHandler(min, max);
+            IChainHandler<string> handler = new CharacterLengthFilterValidationHandler(min, max);
 
             var result = handler.ProcessRequest(value);
 
@@ -27,7 +27,7 @@ namespace PasswordValidatorApiTest.UnitTests
         [InlineData(int.MaxValue, int.MaxValue, "ABC123")]
         public void ProcessRequest_NotFilterRules_ThrowError(int min, int max, string value)
         {
-            IChainHandler handler = new CharacterLengthFilterValidationHandler(min, max);
+            IChainHandler<string> handler = new CharacterLengthFilterValidationHandler(min, max);
 
             Assert.Throws<ChainHandlerException>(() => handler.ProcessRequest(value));
         }

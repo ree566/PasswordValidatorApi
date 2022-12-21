@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace PasswordValidatorApi.Models.Handler
 {
-    public class NotContainAdjacentSameSequenceValidationHandler : IChainHandler
+    public class NotContainAdjacentSameSequenceValidationHandler : IChainHandler<string>
     {
         private readonly string error_message = "Adjacent same sequence not allowed";
         private readonly Regex regex = new Regex("(.+)\\1");

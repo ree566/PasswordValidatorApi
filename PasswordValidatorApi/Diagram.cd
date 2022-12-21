@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PasswordValidatorApi.Models.Handler.CharacterLengthFilterValidationHandler">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAgAAAAAACABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\CharacterLengthFilterValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.Handler.ContainsAtLeastOneDigitsValidationHandler">
+    <Position X="6.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\ContainsAtLeastOneDigitsValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.Handler.ContainsAtLeastOneLowerCaseValidationHandler">
+    <Position X="12" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\ContainsAtLeastOneLowerCaseValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.Handler.ContainsAtLeastOneUppercaseValidationHandler">
+    <Position X="13.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\ContainsAtLeastOneUppercaseValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.Handler.LowerCaseAndDigitsOnlyValidationHandler">
+    <Position X="10.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\LowerCaseAndDigitsOnlyValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.Handler.NotContainAdjacentSameSequenceValidationHandler">
+    <Position X="8.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Handler\NotContainAdjacentSameSequenceValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.ChainManagement.ChainManager&lt;REQUEST_TYPE&gt;">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAABBAAAAAAAAAAAEAAEACAAAAAAAA=</HashCode>
+      <FileName>Models\ChainManagement\ChainManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="PasswordValidatorApi.Models.HandlerChain.ChainHandlerException">
+    <Position X="12" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HandlerChain\ChainHandlerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PasswordValidatorApi.Models.HandlerChain.IChainHandler&lt;REQUEST_TYPE&gt;">
+    <Position X="3.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HandlerChain\IChainHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="PasswordValidatorApi.Models.HandlerChain.HandlerResult">
+    <Position X="13.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HandlerChain\HandlerResult.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -4,7 +4,7 @@ using PasswordValidatorApi.Models.HandlerChain;
 
 namespace PasswordValidatorApi.Models.Handler
 {
-    public class CharacterLengthFilterValidationHandler : IChainHandler
+    public class CharacterLengthFilterValidationHandler : IChainHandler<string>
     {
 
         private readonly string error_message = "Character length is invalid";
