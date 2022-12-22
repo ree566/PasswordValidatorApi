@@ -30,13 +30,13 @@ namespace PasswordValidatorApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<ChainManager<string>>(new ChainManager<string>(true)
+            services.AddSingleton<ChainManager<string>>(new ChainManager<string>() { StopOnFirstException = true }
                         .AppendHandlerToChain(new IChainHandler<string>[] {
                                 new CharacterLengthFilterValidationHandler(6, 15),
                                 new ContainsAtLeastOneLowerCaseValidationHandler(),
                                 new ContainsAtLeastOneDigitsValidationHandler(),
                                 new LowerCaseAndDigitsOnlyValidationHandler(),
-                                new NotContainAdjacentSameSequenceValidationHandler()
+                                new NotContainsAdjacentSameSequenceValidationHandler()
                             }
                         ));
             services.AddSwaggerGen();

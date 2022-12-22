@@ -7,12 +7,11 @@ namespace PasswordValidatorApi.Models.ChainManagement
     {
         private List<IChainHandler<REQUEST_TYPE>> handlerChain = new List<IChainHandler<REQUEST_TYPE>>();
 
-        private bool stopOnFirstHandlerException = false;
-        public bool StopOnFirstException { get { return this.stopOnFirstHandlerException; } }
+        public bool StopOnFirstException { get; set; } = false;
 
-        public ChainManager(bool stopOnFirstHandlerException)
+        public ChainManager()
         {
-            this.stopOnFirstHandlerException = stopOnFirstHandlerException;
+
         }
 
         public ChainManager<REQUEST_TYPE> AppendHandlerToChain(params IChainHandler<REQUEST_TYPE>[] handlers)
@@ -68,7 +67,7 @@ namespace PasswordValidatorApi.Models.ChainManagement
                 catch (ChainHandlerException ex)
                 {
                     chainHandlerExceptionList.Add(ex);
-                    if (stopOnFirstHandlerException)
+                    if (StopOnFirstException)
                     {
                         break;
                     }

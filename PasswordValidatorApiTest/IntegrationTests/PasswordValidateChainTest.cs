@@ -25,14 +25,14 @@ namespace PasswordValidatorApiTest.IntegrationTests
         [InlineData(3, int.MaxValue, "a1b2c3d4")]
         public void ProcessRequest_HasValidPasswordForAllRule_ReturnNoException(int min, int max, string item)
         {
-            ChainManager<string> passwordValidateChain = new ChainManager<string>(false);
+            ChainManager<string> passwordValidateChain = new ChainManager<string>() { StopOnFirstException = false };
             passwordValidateChain.AppendHandlerToChain(new IChainHandler<string>[]
             {
                 new CharacterLengthFilterValidationHandler(min, max),
                 new ContainsAtLeastOneDigitsValidationHandler(),
                 new ContainsAtLeastOneLowerCaseValidationHandler(),
                 new LowerCaseAndDigitsOnlyValidationHandler(),
-                new NotContainAdjacentSameSequenceValidationHandler()
+                new NotContainsAdjacentSameSequenceValidationHandler()
             });
 
             List<ChainHandlerException> exceptions;
@@ -50,13 +50,13 @@ namespace PasswordValidatorApiTest.IntegrationTests
         [InlineData(2, 20, "123a_bcABC")]
         public void ProcessRequest_HasValidPasswordWithoutLowercaseDigitOnlyValidateChain_ReturnNoException(int min, int max, string item)
         {
-            ChainManager<string> passwordValidateChain = new ChainManager<string>(false);
+            ChainManager<string> passwordValidateChain = new ChainManager<string>() { StopOnFirstException = false };
             passwordValidateChain.AppendHandlerToChain(new IChainHandler<string>[]
             {
                 new CharacterLengthFilterValidationHandler(min, max),
                 new ContainsAtLeastOneDigitsValidationHandler(),
                 new ContainsAtLeastOneLowerCaseValidationHandler(),
-                new NotContainAdjacentSameSequenceValidationHandler()
+                new NotContainsAdjacentSameSequenceValidationHandler()
             });
 
             List<ChainHandlerException> exceptions;
@@ -73,13 +73,13 @@ namespace PasswordValidatorApiTest.IntegrationTests
         [InlineData(0, 10, "ABC$#%#DEF")]
         public void ProcessRequest_HasInValidPasswordWithoutLowercaseDigitOnlyValidateChain_ReturnException(int min, int max, string item)
         {
-            ChainManager<string> passwordValidateChain = new ChainManager<string>(false);
+            ChainManager<string> passwordValidateChain = new ChainManager<string>() { StopOnFirstException = false };
             passwordValidateChain.AppendHandlerToChain(new IChainHandler<string>[]
             {
                 new CharacterLengthFilterValidationHandler(min, max),
                 new ContainsAtLeastOneDigitsValidationHandler(),
                 new ContainsAtLeastOneLowerCaseValidationHandler(),
-                new NotContainAdjacentSameSequenceValidationHandler()
+                new NotContainsAdjacentSameSequenceValidationHandler()
             });
 
             List<ChainHandlerException> exceptions;
@@ -103,14 +103,14 @@ namespace PasswordValidatorApiTest.IntegrationTests
         [InlineData(int.MinValue, int.MinValue, "a1")]
         public void ProcessRequest_HasInValidPasswordForAllRule_ReturnException(int min, int max, string item)
         {
-            ChainManager<string> passwordValidateChain = new ChainManager<string>(false);
+            ChainManager<string> passwordValidateChain = new ChainManager<string>() { StopOnFirstException = false };
             passwordValidateChain.AppendHandlerToChain(new IChainHandler<string>[]
             {
                 new CharacterLengthFilterValidationHandler(min, max),
                 new ContainsAtLeastOneDigitsValidationHandler(),
                 new ContainsAtLeastOneLowerCaseValidationHandler(),
                 new LowerCaseAndDigitsOnlyValidationHandler(),
-                new NotContainAdjacentSameSequenceValidationHandler()
+                new NotContainsAdjacentSameSequenceValidationHandler()
             });
 
             List<ChainHandlerException> exceptions;
